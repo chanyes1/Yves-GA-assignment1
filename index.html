@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyScript with Random Color</title>
+
+    <!-- Include PyScript -->
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            background-color: rgb(60, 70, 60);
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .rectangle {
+            width: 350px;
+            height: 600px;
+            background-color: rgb(63, 154, 189);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 100px rgba(145, 157, 13, 0.2);
+            position: absolute;
+            top: 100px;
+            transition: all 2s ease;
+
+            /* Smooth transition */
+        }
+
+        #left-rectangle {
+            left: 50%;
+            z-index: 2;
+            overflow-y: scroll
+        }
+
+        #right-rectangle {
+            right: 50%;
+            z-index: 2;
+            overflow-y: scroll
+        }
+
+        #hidden-rectangle {
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            z-index: 3;
+        }
+
+        /* Animation classes */
+        .move-left {
+            transform: translateX(-150%);
+        }
+
+        .move-right {
+            transform: translateX(150%);
+        }
+
+        .show-hidden {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="rectangle" id="left-rectangle">
+        <h1>Data Privacy</h1>
+        <p>Data Privacy Act of 2012 (Republic Act No. 10173) in the Philippines was a very important event that aims at
+            protecting the privacy of each individual filipino. It governs the collection, storage, and processing of
+            personal data in both the private and public sectors. The law mandates that entities handling personal data
+            implement appropriate security measures to prevent data breaches and ensure compliance. This legislation
+            aligns with global standards such as the European Union’s General Data Protection Regulation (GDPR),
+            reflecting the Philippines’ commitment to safeguarding citizens’ data in an increasingly digital world.
+        </p>
+        <p>However, the effectiveness of this law largely depends on the level of awareness and compliance by
+            organizations and individuals. Many Filipinos still lack a basic understanding of their data privacy rights.
+            They most often share personal information on social media platforms, e-commerce sites, and other digital
+            services without considering how it may be used, sold, stored, or potentially exposed. This widespread lack
+            of awareness opens opportunities for malicious actors to exploit sensitive data for criminal activities,
+            such as identity theft, phishing, and online fraud..</p>
+        <p>The National Privacy Commission (NPC), the regulatory body responsible for enforcing the Data Privacy Act,
+            has been proactive in its efforts to raise public awareness and ensure compliance among organizations. Yet,
+            there is still much work to be done, especially in educating the public about the risks and best practices
+            for data protection. Campaigns emphasizing the importance of strong passwords, recognizing phishing
+            attempts, and understanding privacy settings on social media platforms are essential steps towards
+            empowering citizens. </p>
+        <p>Although the cyber criminals have been caught, it is only the ones obvious enough to be traced, the
+            technological capabilities of the Philippines is still steadily rising. For example, those who use
+            pen-tester to get into government databases and steal information, or illegal black hat hacker groups who
+            target critical health infrastracture back in 2021 when covid was rampant, there are many more other
+            examples. And so, we need to enhance public
+            awareness, fostering digital literacy, and ensuring stronger cybersecurity measures are necessary steps to
+            create a safer and more secure digital environment for all.</p>
+    </div>
+
+    <div class="rectangle" id="right-rectangle">
+        <h1>Cybercrime Awareness</h1>
+        <p>Cybercrimes such as hacking, online scams, identity theft, and cyberbullying have been growing in the
+            Philippines steadily. And so, the Cybercrime Prevention Act of 2012 (Republic Act No. 10175) was made to
+            address these issues. This law defines various forms of cybercrime and outlines penalties for offenders. It
+            also provides the framework for law enforcement agencies to investigate and prosecute cybercriminals.
+
+        </p>
+        <p>Scams involving fake online shops, phishing emails, and fraudulent investment schemes proliferate, preying on
+            the unsuspecting. The COVID-19 pandemic further accelerated digital transformation, pushing more people
+            online for work, education, and commerce, which also led to a surge in cybercrime incidents. This has led to
+            many victims of scammers and hackers in the Philippines, targeting students, or any user of the cyberspace.
+        </p>
+    </div>
+
+    <div class="rectangle" id="hidden-rectangle">
+        <h1>Question Asked</h1>
+        <p>I asked a question in the lecture of what we will do if a group of cybercriminals somehow infiltrate and
+            sabotage key infrastracture like government database, health facilities, logistic and communication systems,
+            that may lead to ships being lost, planes without direction, hospital patients for hostage and many more.
+        </p>
+        <p>My answer to that is that it is a very complicated arms race to getting better security and infiltration
+            techniques. From social engineering to backdoors or power supply control, there will always be new
+            innovations made by the Black hat hackers and the white hat hackers.</p>
+    </div>
+
+    <button onclick="revealRectangles()">Press me</button>
+
+    <!-- PyScript -->
+    <py-script>
+        import random
+
+        def generate_random_color():
+        """Generate a random RGB color in hex format."""
+        return f"#{random.randint(0, 255):02x}{random.randint(0, 255):02x}{random.randint(0, 255):02x}"
+
+        def apply_random_color():
+        """Apply a random color to the hidden rectangle."""
+        hidden_rectangle = Element("hidden-rectangle")
+        random_color = generate_random_color()
+        hidden_rectangle.element.style.backgroundColor = random_color
+    </py-script>
+
+    <script>
+        function revealRectangles() {
+            // Add the movement classes to animate the rectangles
+            document.getElementById("left-rectangle").classList.add("move-left");
+            document.getElementById("right-rectangle").classList.add("move-right");
+
+            // Use PyScript to generate a random color and apply it to the hidden rectangle
+            pyscript.interpreter.run("apply_random_color()");
+
+            // Reveal the hidden rectangle by adding the opacity change
+            setTimeout(() => {
+                document.getElementById("hidden-rectangle").classList.add("show-hidden");
+            }, 1000); // Delay to allow the other rectangles to move first
+        }
+    </script>
+
+</body>
+
+</html>
